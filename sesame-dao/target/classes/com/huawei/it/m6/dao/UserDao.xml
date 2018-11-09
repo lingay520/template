@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.huawei.it.m6.dao.UserDao">
+
+    <select id="getUserByName"  resultType="com.huawei.it.m6.vo.UserVO">
+        select `id`, `name`, `add_time` addTime from user where name = #{name};
+    </select>
+    <insert id="save" >
+       INSERT INTO `user` (name,add_time) values (#{name},#{addTime});
+    </insert>
+</mapper>

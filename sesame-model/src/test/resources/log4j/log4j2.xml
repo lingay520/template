@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="off">
+    <Properties>
+        <Property name="LOG_PATH">/data/x1/logs</Property>
+        <Property name="FILE_PREFIX">rpc</Property>
+    </Properties>
+    <Appenders>
+        <Console name="CONSOLE" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d %-5p [%t] %c{2} (%file:%line) - %m%n"/>
+        </Console>
+        <RollingRandomAccessFile name="DEBUG" fileName="${LOG_PATH}/${FILE_PREFIX}-debug.log"
+                                 filePattern="${LOG_PATH}/$${date:yyyy-MM}/${FILE_PREFIX}-debug-%d{MM-dd-yyyy}-%i.log.gz">
+            <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout>
+                <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="250 MB"/>
+            </Policies>
+        </RollingRandomAccessFile>
+
+        <RollingRandomAccessFile name="INFO" fileName="${LOG_PATH}/${FILE_PREFIX}-info.log"
+                                 filePattern="${LOG_PATH}/$${date:yyyy-MM}/${FILE_PREFIX}-info-%d{MM-dd-yyyy}-%i.log.gz">
+            <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout>
+                <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="250 MB"/>
+            </Policies>
+        </RollingRandomAccessFile>
+
+        <RollingRandomAccessFile name="WARN" fileName="${LOG_PATH}/${FILE_PREFIX}-warn.log"
+                                 filePattern="${LOG_PATH}/$${date:yyyy-MM}/${FILE_PREFIX}-warn-%d{MM-dd-yyyy}-%i.log.gz">
+            <ThresholdFilter level="warn" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout>
+                <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="250 MB"/>
+            </Policies>
+        </RollingRandomAccessFile>
+
+        <RollingRandomAccessFile name="ERROR" fileName="${LOG_PATH}/${FILE_PREFIX}-error.log"
+                                 filePattern="${LOG_PATH}/$${date:yyyy-MM}/${FILE_PREFIX}-error-%d{MM-dd-yyyy}-%i.log.gz">
+            <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout>
+                <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="250 MB"/>
+            </Policies>
+        </RollingRandomAccessFile>
+    </Appenders>
+    <Loggers>
+        <!-- 定义提高其他日志级别使得日志不在控制台打印出来 -->
+        <Logger name="org.apache.logging.log4j.core" level="warn"/>
+        <Logger name="org.apache.logging.log4j2" level="warn"/>
+        <Logger name="org.apache.kafka.clients" level="warn"/>
+        <Logger name="org.apache.kafka.common.network" level="warn"/>
+
+        <AsyncRoot level="debug">
+            <AppenderRef ref="CONSOLE"/>
+            <AppenderRef ref="DEBUG"/>
+            <AppenderRef ref="INFO"/>
+            <AppenderRef ref="WARN"/>
+            <AppenderRef ref="ERROR"/>
+        </AsyncRoot>
+    </Loggers>
+</Configuration>
