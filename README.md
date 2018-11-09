@@ -1,2 +1,2 @@
 # templete
-# template
+ssm模版
